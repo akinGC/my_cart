@@ -1,0 +1,23 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+.msg_whole{
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    color: white;
+    font-weight: 700;
+
+}
+.successmsg{
+    background-color: green;
+}
+.error{
+    background-color: red;
+}
+.loading{
+    background-color: orange;
+}

@@ -1,0 +1,36 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+.nav_cover{
+    height: 8vh;
+    background-color: indigo;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4vw;
+    align-items: center;
+
+}
+.nav_title{
+    color: white;
+    font-size: xx-large;
+}
+
+.shwcrt_cover{
+    border: 2px solid green;
+    border-radius: 5px;
+    padding: 1vh;
+    display: flex;
+    gap: 2vw;
+    cursor: pointer;
+}
+.shwcrt_txt{
+    color: green;
+    font-weight: 700;
+}
+.shwcrt_num{
+    background-color: green;
+    border-radius: 12px;
+    padding: 0 5px;
+    color: white;
+}
