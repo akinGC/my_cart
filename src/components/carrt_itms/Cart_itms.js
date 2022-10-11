@@ -73,17 +73,24 @@ function Cart_itms() {
         }
     }
     async function add2arry(ele,msg){
+        dispatch(arrayaction.stageset('loading'))
         if(msg=='new'){
             try{
                 const resp = await fetch('https://react-2fea7-default-rtdb.asia-southeast1.firebasedatabase.app/mycart.json',{
                 method:'POST',
                 body:JSON.stringify(ele)
             })
+            resp.ok? dispatch(arrayaction.stageset('success')):   dispatch(arrayaction.stageset('error'))
+
+            
                 const data =await resp.json()
+                
+               
                 // "hope is one of the most precious of all, not everyone can afford it, especially not someone like myself!"
                 return data.name
         }
         catch(err){
+           
             console.log(err)
         
         }    
@@ -105,6 +112,7 @@ function Cart_itms() {
                 method:'PUT',
                 body:JSON.stringify(mis)
             })
+            resp.ok? dispatch(arrayaction.stageset('success')):   dispatch(arrayaction.stageset('error'))
                 const data =await resp.json()
                 // "hope is one of the most precious of all, not everyone can afford it, especially not someone like myself!"
                

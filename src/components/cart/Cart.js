@@ -69,6 +69,7 @@ function Cart() {
 
 
 async function editdetails(ele){
+    dispatch(arrayaction.stageset('loading'))
     let elment = {
           title:ele.title,
           amt:ele.amt,
@@ -82,6 +83,7 @@ async function editdetails(ele){
             method:'PUT',
             body:JSON.stringify(elment)
         })
+        resp.ok? dispatch(arrayaction.stageset('success')):   dispatch(arrayaction.stageset('error'))
         const data = await resp.json()
     }
     catch(err){
