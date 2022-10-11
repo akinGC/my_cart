@@ -8,7 +8,7 @@ function Cart_itms() {
     const newarrr = useSelector(state=>state.arr.array)
  
     // console.log(orgarray)
-    function newitmadded(e){
+    async function newitmadded(e){
         let cnt=0
         let newObj={ }
         for (let i = 0; i < newarrr.length; i++) {
@@ -28,6 +28,15 @@ function Cart_itms() {
                     id:orgarray[i].id,
                     qty:orgarray[i].qty
                    }
+                  let sid = await add2arry(newObj,'new')
+                  newObj={
+                    title:orgarray[i].title,
+                    amt:orgarray[i].amt,
+                    desc:orgarray[i].desc,
+                    id:orgarray[i].id,
+                    qty:orgarray[i].qty,
+                    sid:sid
+                   }
                 }
                 
             }
@@ -46,8 +55,10 @@ function Cart_itms() {
                     amt:newarrr[i].amt,
                     desc:newarrr[i].desc,
                     id:newarrr[i].id,
-                    qty:newarrr[i].qty + 1
+                    qty:newarrr[i].qty + 1,
+                    sid:newarrr[i].sid
                    }
+                   add2arry(newObj,'inc')
                    interarray.push(newObj)
               
                 }
@@ -60,6 +71,50 @@ function Cart_itms() {
             dispatch(arrayaction.setarrayreplace(interarray))
            
         }
+    }
+    async function add2arry(ele,msg){
+        if(msg=='new'){
+            try{
+                const resp = await fetch('https://react-2fea7-default-rtdb.asia-southeast1.firebasedatabase.app/mycart.json',{
+                method:'POST',
+                body:JSON.stringify(ele)
+            })
+                const data =await resp.json()
+                // "hope is one of the most precious of all, not everyone can afford it, especially not someone like myself!"
+                return data.name
+        }
+        catch(err){
+            console.log(err)
+        
+        }    
+    
+    }
+    else{
+            let mis={
+              
+                    title:ele.title,
+                    amt:ele.amt,
+                    desc:ele.desc,
+                    id:ele.id,
+                    qty:ele.qty,
+                  
+                   
+            }
+            try{
+                const resp = await fetch(`https://react-2fea7-default-rtdb.asia-southeast1.firebasedatabase.app/mycart/${ele.sid}.json`,{
+                method:'PUT',
+                body:JSON.stringify(mis)
+            })
+                const data =await resp.json()
+                // "hope is one of the most precious of all, not everyone can afford it, especially not someone like myself!"
+               
+        }
+        catch(err){
+            console.log(err)
+        
+        }    
+    }
+
     }
     return ( 
         <div className='crtitm_whole'>

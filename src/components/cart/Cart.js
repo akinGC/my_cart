@@ -5,7 +5,7 @@ function Cart() {
     const showcrt = useSelector(state=> state.crt.showcart)
     const newarr = useSelector(state=> state.arr.array)
     const dispatch=useDispatch()
-    function reducecnt(e){
+   async function reducecnt(e){
         let ar1 = []
     
         // console.log(ar1)
@@ -17,13 +17,16 @@ function Cart() {
                         amt:newarr[i].amt,
                         desc:newarr[i].desc,
                         id:newarr[i].id,
-                        qty:newarr[i].qty - 1
+                        qty:newarr[i].qty - 1,
+                        sid:newarr[i].sid
                     }
+                    await  editdetails(newObj)
                     ar1.push(newObj)
                 }
               
                 
             }
+
             else{
                 ar1.push(newarr[i])
             }
@@ -32,7 +35,9 @@ function Cart() {
         console.log(ar1)
         dispatch(arrayaction.setarrayreplace(ar1))
     }
-    function incrscnt(e){
+
+
+  async  function incrscnt(e){
         let ar1 = []
     
         console.log(e.target.id)
@@ -47,8 +52,10 @@ function Cart() {
                     amt:newarr[i].amt,
                     desc:newarr[i].desc,
                     id:newarr[i].id,
-                    qty:newarr[i].qty + 1
+                    qty:newarr[i].qty + 1,
+                    sid:newarr[i].sid
                 }
+              await  editdetails(newObj)
                 ar1.push(newObj)
             }
             else{
@@ -59,6 +66,29 @@ function Cart() {
         console.log(ar1)
         dispatch(arrayaction.setarrayreplace(ar1))
     }
+
+
+async function editdetails(ele){
+    let elment = {
+          title:ele.title,
+          amt:ele.amt,
+          desc:ele.desc,
+          id:ele.id,
+          qty:ele.qty,
+         
+    }
+    try{
+        const resp = await fetch(`https://react-2fea7-default-rtdb.asia-southeast1.firebasedatabase.app/mycart/${ele.sid}.json`,{
+            method:'PUT',
+            body:JSON.stringify(elment)
+        })
+        const data = await resp.json()
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
     return ( 
          <div className='cart_whole'>
            {showcrt && <div className='cart_cover'>
